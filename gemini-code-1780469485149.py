@@ -402,3 +402,32 @@ Code output
                   शिक्षा तर्फ                                         2
                   स्वास्थ्य तर्फ                                     40
 dtype: int64
+import pandas as pd
+
+# (Assuming df is processed as shown in the script above)
+# You can quickly save a simple view to HTML using:
+master_df = pd.read_excel("कर्मचारी.xlsx") # Replace with cleaned dataframe logic
+
+html_content = """
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <style> body { font-family: Arial, sans-serif; margin: 30px; } </style>
+</head>
+<body>
+    <h2>कर्मचारी विवरण प्रणाली</h2>
+    """ + master_df.to_html(classes='display', id='empTable', index=False) + """
+    <script>
+        $(document).ready(function() {
+            $('#empTable').DataTable({ "pageLength": 25 });
+        });
+    </script>
+</body>
+</html>
+"""
+
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
+print("Frontend saved as index.html. Just double-click it to view!")
